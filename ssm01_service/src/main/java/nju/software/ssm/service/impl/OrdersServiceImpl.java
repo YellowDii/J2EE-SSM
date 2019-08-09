@@ -1,0 +1,32 @@
+package nju.software.ssm.service.impl;
+
+import com.github.pagehelper.PageHelper;
+import nju.software.ssm.dao.IOrdersDao;
+import nju.software.ssm.domain.Orders;
+import nju.software.ssm.service.IOrdersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class OrdersServiceImpl implements IOrdersService {
+    @Autowired
+    private IOrdersDao ordersDao;
+
+    @Override
+    public Orders findById(Integer ordersId) throws Exception{
+        Orders order=ordersDao.findById(ordersId);
+        return order;
+    }
+
+    @Override
+    public List<Orders> findAll(int page,int size) throws Exception {
+
+        //参数pageNum是页码值 参数pageSize代表是每页显示条数
+        PageHelper.startPage(page,size);
+        return ordersDao.findAll();
+    }
+}
